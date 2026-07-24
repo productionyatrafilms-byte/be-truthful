@@ -105,13 +105,16 @@
         const clickAudio = new Audio("./assets/audio/click.mp3");
         const topicAudio = new Audio("./assets/audio/topic.mp3");
 
+        function playSound(audio) {
+          audio.currentTime = 0;
+          audio.play().catch((err) => {
+            console.error("Error playing audio:", err);
+          });
+        }
+
         if (clickBtn && pageTitle && topics) {
           clickBtn.addEventListener("click", () => {
-            // play click sound
-            clickAudio.currentTime = 0;
-            clickAudio.play().catch((err) => {
-              console.error("Error playing click audio:", err);
-            });
+            playSound(clickAudio);
 
             // hide the click button
             clickBtn.classList.add("hidden");
@@ -123,12 +126,16 @@
         }
 
         topicLinks.forEach((topic) => {
-          topic.addEventListener("click", () => {
-            // play topic sound
-            topicAudio.currentTime = 0;
-            topicAudio.play().catch((err) => {
-              console.error("Error playing topic audio:", err);
-            });
+          topic.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            playSound(topicAudio);
+
+            const href = topic.getAttribute("href");
+
+            setTimeout(() => {
+              window.location.href = href;
+            }, 200);
           });
         });
       });
