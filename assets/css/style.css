@@ -14,8 +14,8 @@
 }
 
 @font-face {
-  font-family: "NotoSansGujaratiBold";
-  src: url("../../fonts/NotoSansGujarati-Bold.ttf") format("truetype");
+  font-family: "ITFDevanagari";
+  src: url("../../fonts/ITFDevanagari.ttc") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -24,11 +24,10 @@
 @font-face {
   font-family: "NotoSansGujaratiRegular";
   src: url("../../fonts/NotoSansGujarati-Regular.ttf") format("truetype");
-  font-weight: 400;
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: BarlowCondensedBold;
   src: url("../../fonts/BarlowCondensed-ExtraBold.ttf") format("truetype");
@@ -66,12 +65,32 @@ body {
   transition: opacity 0.5s ease;
 }
 
+body[data-lang="hi"] {
+  font-family: "ITFDevanagari"!important;
+  font-weight: 700!important;
+}
+
+body[data-lang="gu"] {
+  font-family: "NotoSansGujaratiRegular"!important;
+  font-weight: 700!important;
+}
+
+
 body.page-loaded {
   opacity: 1;
 }
 
 body.page-fade-out {
   opacity: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Generic hidden utility — fully removes an element from layout
+   (e.g. the next-btn on the last slide). Kept !important so it wins
+   over any other display rules on the same element. */
+/* ------------------------------------------------------------------ */
+.hidden {
+  visibility: none !important;
 }
 
 .home-btn {
@@ -91,6 +110,10 @@ body.page-fade-out {
 .home-btn img {
   width: 100%;
   display: block;
+}
+
+.home-btn:hover img{
+  content: url("./../images/home-btn-hov.png")
 }
 
 .hero-img {
@@ -194,17 +217,19 @@ body.page-fade-out {
 
 .topics {
   position: absolute;
-  bottom: 0%;
+  bottom: -100%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 35%;
-  /* background-color: red; */
+  height: 37%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-image: url("../images/rectangle.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: bottom 0.8s ease;
 }
-
 .topic {
   width: 16%;
   height: auto;
@@ -223,9 +248,7 @@ body.page-fade-out {
 }
 
 .topic span {
-  font-size: 1.7vw;
-  color: white;
-  font-family: "BalooThambi";
+
 }
 
 .topic .num {
@@ -234,6 +257,9 @@ body.page-fade-out {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
+   font-size: 1.7vw;
+  color: white;
+  font-family: "BalooThambi";
 }
 
 .topic .topic-text {
@@ -245,7 +271,21 @@ body.page-fade-out {
   width: 80%;
   text-align: center;
   line-height: 1;
+    font-size: 1.7vw;
+  color: white;
+  font-family: "BalooThambi";
 }
+
+body[data-lang="hi"] .topic span {
+  line-height: 2.4vw!important;
+  font-size: 1.4vw!important;
+}
+
+body[data-lang="gu"] .topic span{
+   line-height: 2.4vw!important;
+  font-size: 1.4vw!important;
+}
+
 
 main {
   position: relative;
@@ -310,10 +350,12 @@ main .right-container {
 .pages .page:hover {
   text-shadow: 0 0 0.4vw rgba(50, 50, 50, 0.9);
   box-shadow: 0 0 0.8vw rgba(65, 65, 65, 0.7);
+   background-color: #0FB0FB;
 }
 
 .pages .page.active {
-  opacity: 0.5;
+  opacity: 1;
+  background-color:#0FB0FB;
 }
 
 .swiper {
@@ -340,7 +382,7 @@ main .right-container {
 
 .text-swiper .swiper-slide {
   width: 100%;
-  height: 20vw;
+  height: 22vw;
   /* background-color: red; */
   display: flex;
   justify-content: center;
@@ -353,16 +395,29 @@ main .right-container {
 }
 
 .slide-text {
-
   width: 80%;
+  height: 100%;
   color: #4D549C;
   font-family: "BalooRegular";
   font-size: 2.8vw;
   line-height: 1;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.7vw;
 }
 
+body[data-lang="hi"] .slide-text{
+  line-height: 3.5vw!important;
+  font-size: 2.7vw!important;
+}
 
+body[data-lang="gu"] .slide-text{
+   line-height: 3.5vw!important;
+  font-size: 2.5vw!important;
+  font-weight: bolder!important;
+}
 
 .video-swiper {
   width: 45vw;
@@ -417,7 +472,7 @@ main .right-container {
 }
 
 .swiper-title .topic-text {
-  top: 70%;
+  top: 73%;
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1;
@@ -425,54 +480,112 @@ main .right-container {
   text-align: center;
 }
 
+body[data-lang="hi"] .swiper-title .topic-text{
+  line-height: 2vw!important;
+  font-size: 1.45vw!important;
+}
+
+body[data-lang="gu"] .swiper-title .topic-text{
+   line-height: 2.2vw!important;
+  font-size: 1.45vw!important;
+}
 .custom-nav {
   position: absolute;
-  top: 50%;
+  bottom: 1vw;
   transform: translateX(-505);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 35vw;
+  gap: 25vw;
   z-index: 1000;
 }
 
-.hidden {
-  opacity: 0;
+/* Prev button is dimmed (not hidden) on the first slide.
+   Next button is fully hidden on the last slide (see .hidden). */
+.swiper-ctrl-prev.disabled,
+.swiper-ctrl-next.disabled {
+  opacity: 0.35;
   pointer-events: none;
 }
 
 .swiper-ctrl-prev,
 .swiper-ctrl-next {
-  width: 3vw;
-  height: 3vw;
-  border-radius: 50%;
-  border: 0.2vw solid rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.14);
-  color: white;
+  width: 4vw;
+  height: 4vw;
+  background-color: transparent;
+  border:none;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease, opacity 0.3s ease;
   font-size: 0.9vw;
   position: relative;
 }
 
-.swiper-ctrl-prev i,
-.swiper-ctrl-next i {
+
+.swiper-ctrl-prev img,
+.swiper-ctrl-next img {
   position: absolute;
   transition: opacity 0.3s ease;
   font-size: 1.2vw;
+  width:100%;
+}
+
+.swiper-ctrl-prev:hover img {
+  content: url("../images/prev-btn-hov.png");
+}
+
+.swiper-ctrl-next:hover img {
+  content: url("../images/next-btn-hov.png");
 }
 
 
 /* hover style */
 .swiper-ctrl-prev:hover,
 .swiper-ctrl-next:hover {
-  background: rgba(255, 255, 255, 0.7);
-  color: gray;
+ 
 }
 
+/* ------------------------------------------------------------------ */
+/* Dot pagination — bottom of the left-container.
+   All sizing/spacing values below use fixed px (not vw/%) so the
+   pagination's size stays identical no matter how the page is
+   zoomed in/out or how the viewport width changes. Only its
+   centering (left: 50%) is relative to the container, which keeps
+   it anchored to the same visual spot shown in the reference shot. */
+/* ------------------------------------------------------------------ */
+.video-pagination {
+  position: absolute;
+  bottom: 2vw;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  padding: 0.2vw 0.7vw;
+  z-index: 1000;
+}
+
+.video-pagination .dot {
+  width: 0.8vw;
+  height: 0.8vw;
+ 
+  border-radius: 50%;
+  border: 0.2vw solid #0FB0FB;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.video-pagination .dot:hover {
+  transform: scale(1.2);
+}
+
+.video-pagination .dot.active {
+  background-color: #0FB0FB;
+}
 
 .pranam-container {
   position: absolute;
@@ -572,4 +685,53 @@ main .right-container {
 .back-btn:hover i {
   font-size: 1.2vw;
   color: #6168EA !important;
+}
+
+.pranam-link {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 2vw;
+    bottom: 2vw;
+    width: 9vw;
+    height: auto;
+    text-decoration: none;
+    z-index: 9999;
+    pointer-events: auto;
+    cursor: pointer;
+    animation: pranamPop 1.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+    
+.pranam-link img {
+  position: relative;
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.pranam-link span {
+  position: absolute;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.3vw;
+  padding-right: 1vw;
+    font-family: "BalooRegular";
+
+}
+
+@keyframes pranamPop {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }

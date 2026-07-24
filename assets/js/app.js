@@ -8,6 +8,34 @@ const LANG_KEY = "selectedLanguage";
 let translations = {};
 let isNavigating = false;
 
+// audio files for each language
+const audioEn = new Audio("./assets/audio/Eng.mpeg");
+const audioHi = new Audio("./assets/audio/Hin.mpeg");
+const audioGu = new Audio("./assets/audio/Guj.mpeg");
+
+// stop any currently playing language audio, then play the requested one
+function playLanguageAudio(lang) {
+  [audioEn, audioHi, audioGu].forEach((audio) => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
+  let audioToPlay;
+  if (lang === "English") {
+    audioToPlay = audioEn;
+  } else if (lang === "Hindi") {
+    audioToPlay = audioHi;
+  } else if (lang === "Gujarati") {
+    audioToPlay = audioGu;
+  }
+
+  if (audioToPlay) {
+    audioToPlay.play().catch((err) => {
+      console.error("Error playing language audio:", err);
+    });
+  }
+}
+
 // get saved language from localStorage
 function getSavedLanguage() {
   return localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
@@ -93,7 +121,18 @@ topicLinks.forEach((topic) => {
   });
 });
 
-// button clicks — save on manual selection
-btnEn.addEventListener("click", () => applyLanguage("English"));
-btnHi.addEventListener("click", () => applyLanguage("Hindi"));
-btnGu.addEventListener("click", () => applyLanguage("Gujarati"));
+// button clicks — save on manual selection + play corresponding audio
+btnEn.addEventListener("click", () => {
+  applyLanguage("English");
+  playLanguageAudio("English");
+});
+
+btnHi.addEventListener("click", () => {
+  applyLanguage("Hindi");
+  playLanguageAudio("Hindi");
+});
+
+btnGu.addEventListener("click", () => {
+  applyLanguage("Gujarati");
+  playLanguageAudio("Gujarati");
+});

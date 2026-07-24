@@ -9,24 +9,26 @@
   <style>
     .page-title {
       position: absolute;
-      width: 50vw;
-      height: 12vw;
-      top: 50%;
+      width: 55vw;
+      height: 30vw;
+      top: 40%;
       left: 50%;
       text-align: center;
       z-index: 10000;
-      background-color: #ffea71;
-      transition: opacity 3s ease;
+      transition: top 0.8s ease, opacity 3s ease;
       transform: translate(-50%, -50%);
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 0.3vw solid white;
       border-radius: 2vw;
-      box-shadow: 0vw 0.4vw 0.2vw rgba(59, 59, 59, 0.421);
+      background-image: url("./assets/images/page-title.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     .page-title span {
+      margin-top: 9vw;
       font-size: 6vw;
       text-align: center;
       -webkit-text-stroke: 0.1vw transparent;
@@ -35,21 +37,101 @@
       font-weight: bolder !important;
     }
 
+    .topics {
+      transition: bottom 0.8s ease;
+    }
+
+    .click {
+      transition: opacity 0.4s ease;
+    }
+
     body {
       background-image: url("./assets/images/bg-image.png");
+      overflow: hidden;
     }
   </style>
   <body>
     <div class="page-title">
       <span data-lang-key="title"></span>
     </div>
-    <a href="be-truthful.html" class="click" data-lang-key="click"></a>
+    <div class="click" data-lang-key="click"></div>
     <!-- nav-container -->
     <div class="language-container">
       <div class="english active">E</div>
       <div class="hindi">H</div>
       <div class="gujrati">G</div>
     </div>
+    <div class="topics">
+      <a href="topic-1.html" class="topic topic-1">
+        <img src="./assets/images/1.png" alt="" />
+        <span class="num" data-lang-key="num-1"></span>
+        <span class="topic-text" data-lang-key="title-1"></span>
+      </a>
+      <a href="topic-2.html" class="topic topic-2">
+        <img src="./assets/images/2.png" alt="" />
+        <span class="num" data-lang-key="num-2"></span>
+        <span class="topic-text" data-lang-key="title-2"></span>
+      </a>
+      <a href="topic-3.html" class="topic topic-3">
+        <img src="./assets/images/3.png" alt="" />
+        <span class="num" data-lang-key="num-3"></span>
+        <span class="topic-text" data-lang-key="title-3"></span>
+      </a>
+      <a href="topic-4.html" class="topic topic-4">
+        <img src="./assets/images/4.png" alt="" />
+        <span class="num" data-lang-key="num-4"></span>
+        <span class="topic-text" data-lang-key="title-4"></span>
+      </a>
+      <a href="topic-5.html" class="topic topic-5">
+        <img src="./assets/images/5.png" alt="" />
+        <span class="num" data-lang-key="num-5"></span>
+        <span class="topic-text" data-lang-key="title-5"></span>
+      </a>
+      <a href="topic-6.html" class="topic topic-6">
+        <img src="./assets/images/6.png" alt="" />
+        <span class="num" data-lang-key="num-6"></span>
+        <span class="topic-text" data-lang-key="title-6"></span>
+      </a>
+    </div>
     <script src="./assets/js/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const clickBtn = document.querySelector(".click");
+        const pageTitle = document.querySelector(".page-title");
+        const topics = document.querySelector(".topics");
+        const topicLinks = document.querySelectorAll(".topic");
+
+        // audio for click button and topic links
+        const clickAudio = new Audio("./assets/audio/click.mp3");
+        const topicAudio = new Audio("./assets/audio/topic.mp3");
+
+        if (clickBtn && pageTitle && topics) {
+          clickBtn.addEventListener("click", () => {
+            // play click sound
+            clickAudio.currentTime = 0;
+            clickAudio.play().catch((err) => {
+              console.error("Error playing click audio:", err);
+            });
+
+            // hide the click button
+            clickBtn.classList.add("hidden");
+
+            // move page-title up and reveal topics
+            pageTitle.style.top = "25%";
+            topics.style.bottom = "0";
+          });
+        }
+
+        topicLinks.forEach((topic) => {
+          topic.addEventListener("click", () => {
+            // play topic sound
+            topicAudio.currentTime = 0;
+            topicAudio.play().catch((err) => {
+              console.error("Error playing topic audio:", err);
+            });
+          });
+        });
+      });
+    </script>
   </body>
 </html>

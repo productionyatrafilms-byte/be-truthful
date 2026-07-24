@@ -53,6 +53,11 @@
     }
   </style>
   <body>
+    <!-- Sound effects -->
+    <audio id="topicAudio" src="./assets/audio/topic.mp3" preload="auto"></audio>
+    <audio id="swiperAudio" src="./assets/audio/swiper.mp3" preload="auto"></audio>
+    <audio id="popAudio" src="./assets/audio/pop.mp3" preload="auto"></audio>
+
     <a class="home-btn" href="index.html">
       <img src="./assets/images/home-btn.png" alt="" />
     </a>
@@ -85,25 +90,28 @@
                 <source src="./assets/videos/9.mp4" type="video/mp4" />
               </video>
             </div>
-            
+
           </div>
         </div>
 
-        <div class="custom-nav">
-          <button class="swiper-ctrl-prev hidden">
-            <i class="fa-solid fa-chevron-left"></i>
+         <div class="custom-nav">
+          <button class="swiper-ctrl-prev disabled">
+            <img src="./assets/images/prev-btn.png" alt="" />
           </button>
 
           <button class="swiper-ctrl-next">
-            <i class="fa-solid fa-chevron-right"></i>
+            <img src="./assets/images/next-btn.png" alt="" />
           </button>
         </div>
+
+        <!-- Dot pagination for the video/text swipers -->
+        <div class="video-pagination"></div>
       </div>
       <div class="right-container">
         <div class="pages">
           <a class="page page-1" href="topic-1.html" data-lang-key="num-1"></a>
           <a class="page page-2" href="topic-2.html" data-lang-key="num-2"></a>
-          <!-- <a class="page page-3" href="topic-3.html" data-lang-key="num-3"></a> -->
+          <a class="page page-3 active" href="topic-3.html" data-lang-key="num-3"></a>
           <a class="page page-4" href="topic-4.html" data-lang-key="num-4"></a>
           <a class="page page-5" href="topic-5.html" data-lang-key="num-5"></a>
           <a class="page page-6" href="topic-6.html" data-lang-key="num-6"></a>
@@ -135,6 +143,51 @@
     <script>
       const prevBtn = document.querySelector(".swiper-ctrl-prev");
       const nextBtn = document.querySelector(".swiper-ctrl-next");
+      const paginationContainer = document.querySelector(".video-pagination");
+
+      // ---- Sound effect setup ----
+      const topicAudio = document.getElementById("topicAudio");
+      const swiperAudio = document.getElementById("swiperAudio");
+      const popAudio = document.getElementById("popAudio");
+
+      function playSound(audio) {
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+
+      // Play swiper.mp3 whenever the prev/next swiper nav buttons are used
+      if (prevBtn) {
+        prevBtn.addEventListener("click", () => playSound(swiperAudio));
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener("click", () => playSound(swiperAudio));
+      }
+
+      // Play pop.mp3 when the home button is clicked (small delay so the sound can start before navigating away)
+      const homeBtn = document.querySelector(".home-btn");
+      if (homeBtn) {
+        homeBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          playSound(popAudio);
+          const href = homeBtn.getAttribute("href");
+          setTimeout(() => {
+            window.location.href = href;
+          }, 200);
+        });
+      }
+
+      // Play topic.mp3 when a topic page link is clicked (small delay so the sound can start before navigating away)
+      document.querySelectorAll(".pages .page").forEach((pageLink) => {
+        pageLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          playSound(topicAudio);
+          const href = pageLink.getAttribute("href");
+          setTimeout(() => {
+            window.location.href = href;
+          }, 200);
+        });
+      });
 
       const textSwiper = new Swiper(".text-swiper", {
         slidesPerView: 1,
@@ -172,13 +225,38 @@
         }
       }
 
+      // Disabled (dimmed, non-clickable) instead of fully hidden on first/last slide
       function updateNav() {
         const isFirst = videoSwiper.activeIndex === 0;
         const isLast =
           videoSwiper.activeIndex === videoSwiper.slides.length - 1;
 
-        prevBtn.classList.toggle("hidden", isFirst);
-        nextBtn.classList.toggle("hidden", isLast);
+        prevBtn.classList.toggle("disabled", isFirst);
+        nextBtn.classList.toggle("disabled", isLast);
+      }
+
+      // Build the dot pagination once, based on how many slides exist
+      function buildPagination() {
+        paginationContainer.innerHTML = "";
+        const totalSlides = videoSwiper.slides.length;
+
+        for (let i = 0; i < totalSlides; i++) {
+          const dot = document.createElement("div");
+          dot.classList.add("dot");
+          if (i === 0) dot.classList.add("active");
+          dot.addEventListener("click", () => {
+            playSound(swiperAudio);
+            syncSwipers(i);
+          });
+          paginationContainer.appendChild(dot);
+        }
+      }
+
+      function updatePagination() {
+        const dots = paginationContainer.querySelectorAll(".dot");
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === videoSwiper.activeIndex);
+        });
       }
 
       function syncSwipers(index) {
@@ -187,16 +265,23 @@
         pauseAllVideos();
         playActiveVideo();
         updateNav();
+        updatePagination();
       }
 
       nextBtn.addEventListener("click", () => {
-        if (videoSwiper.activeIndex < videoSwiper.slides.length - 1) {
+        if (
+          !nextBtn.classList.contains("disabled") &&
+          videoSwiper.activeIndex < videoSwiper.slides.length - 1
+        ) {
           syncSwipers(videoSwiper.activeIndex + 1);
         }
       });
 
       prevBtn.addEventListener("click", () => {
-        if (videoSwiper.activeIndex > 0) {
+        if (
+          !prevBtn.classList.contains("disabled") &&
+          videoSwiper.activeIndex > 0
+        ) {
           syncSwipers(videoSwiper.activeIndex - 1);
         }
       });
@@ -206,6 +291,7 @@
         pauseAllVideos();
         playActiveVideo();
         updateNav();
+        updatePagination();
       });
 
       textSwiper.on("slideChange", function () {
@@ -214,10 +300,13 @@
           pauseAllVideos();
           playActiveVideo();
           updateNav();
+          updatePagination();
         }
       });
 
+      buildPagination();
       updateNav();
+      updatePagination();
       playActiveVideo();
     </script>
   </body>

@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title data-lang-key="title"></title>
+
     <link rel="stylesheet" href="./assets/css/style.css" />
 
     <!-- Swiper CSS -->
@@ -17,57 +19,104 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+
+    <style>
+      body {
+        background-image: url("./assets/images/bg-image.png");
+      }
+
+      .page-title {
+        margin-left: 5%;
+        position: absolute;
+        width: 25vw;
+        height: 6vw;
+        top: 15%;
+        left: 50%;
+        text-align: center;
+        z-index: 10000;
+        background-color: #ffea71;
+        transition: opacity 3s ease;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 0.3vw solid white;
+        border-radius: 1vw;
+        box-shadow: 0 0.4vw 0.2vw rgba(59, 59, 59, 0.421);
+      }
+
+      .page-title span {
+        display: block;
+        font-size: 3vw;
+        text-align: center;
+        color: #ff2050;
+        font-weight: bolder !important;
+        -webkit-text-stroke: 0.1vw transparent;
+      }
+
+      /* Pranam link is hidden initially */
+      .pranam-link {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          opacity 0.5s ease,
+          visibility 0.5s ease;
+      }
+
+      /* Show Pranam link only on the last slide */
+      .pranam-link.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+    </style>
   </head>
-  <style>
-    .page-title {
-      margin-left: 5%;
-      position: absolute;
-      width: 25vw;
-      height: 6vw;
-      top: 15%;
-      left: 50%;
-      text-align: center;
-      z-index: 10000;
-      background-color: #ffea71;
-      transition: opacity 3s ease;
-      transform: translate(-50%, -50%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 0.3vw solid white;
-      border-radius: 1vw;
-      box-shadow: 0vw 0.4vw 0.2vw rgba(59, 59, 59, 0.421);
-    }
 
-    .page-title span {
-      font-size: 3vw;
-      text-align: center;
-      -webkit-text-stroke: 0.1vw transparent;
-      color: #ff2050;
-      display: block;
-      font-weight: bolder !important;
-    }
-
-    body {
-      background-image: url("./assets/images/bg-image.png");
-    }
-  </style>
   <body>
+    <!-- Initially hidden; visible only on the last slide -->
+    <a href="pranam.html" class="pranam-link">
+      <img src="./assets/images/arowAsset.png" alt="" />
+      <span data-lang-key="pranam"></span>
+    </a>
+
+    <!-- Sound effects -->
+    <audio
+      id="topicAudio"
+      src="./assets/audio/topic.mp3"
+      preload="auto"
+    ></audio>
+
+    <audio
+      id="swiperAudio"
+      src="./assets/audio/swiper.mp3"
+      preload="auto"
+    ></audio>
+
+    <audio
+      id="popAudio"
+      src="./assets/audio/pop.mp3"
+      preload="auto"
+    ></audio>
+
     <a class="home-btn" href="index.html">
       <img src="./assets/images/home-btn.png" alt="" />
     </a>
-    <!-- nav-container -->
+
+    <!-- Language buttons -->
     <div class="language-container">
       <div class="english active">E</div>
       <div class="hindi">H</div>
       <div class="gujrati">G</div>
     </div>
+
     <main>
       <div class="left-container">
         <div class="page-title">
-          <span data-lang-key="title"> </span>
+          <span data-lang-key="title"></span>
         </div>
 
+        <!-- Video Swiper -->
         <div class="swiper video-swiper">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -75,6 +124,7 @@
                 <source src="./assets/videos/20.mp4" type="video/mp4" />
               </video>
             </div>
+
             <div class="swiper-slide">
               <video muted playsinline preload="metadata">
                 <source src="./assets/videos/21.mp4" type="video/mp4" />
@@ -83,35 +133,73 @@
           </div>
         </div>
 
+        <!-- Navigation buttons -->
         <div class="custom-nav">
-          <button class="swiper-ctrl-prev hidden">
-            <i class="fa-solid fa-chevron-left"></i>
+          <button class="swiper-ctrl-prev disabled">
+            <img src="./assets/images/prev-btn.png" alt="Previous" />
           </button>
 
           <button class="swiper-ctrl-next">
-            <i class="fa-solid fa-chevron-right"></i>
+            <img src="./assets/images/next-btn.png" alt="Next" />
           </button>
         </div>
+
+        <!-- Pagination dots -->
+        <div class="video-pagination"></div>
       </div>
+
       <div class="right-container">
         <div class="pages">
-          <a class="page page-1" href="topic-1.html" data-lang-key="num-1"></a>
-          <a class="page page-2" href="topic-2.html" data-lang-key="num-2"></a>
-          <a class="page page-3" href="topic-3.html" data-lang-key="num-3"></a>
-          <a class="page page-4" href="topic-4.html" data-lang-key="num-4"></a>
-          <a class="page page-5" href="topic-5.html" data-lang-key="num-5"></a>
-          <!-- <a class="page page-6" href="topic-6.html" data-lang-key="num-6"></a> -->
+          <a
+            class="page page-1"
+            href="topic-1.html"
+            data-lang-key="num-1"
+          ></a>
+
+          <a
+            class="page page-2"
+            href="topic-2.html"
+            data-lang-key="num-2"
+          ></a>
+
+          <a
+            class="page page-3"
+            href="topic-3.html"
+            data-lang-key="num-3"
+          ></a>
+
+          <a
+            class="page page-4"
+            href="topic-4.html"
+            data-lang-key="num-4"
+          ></a>
+
+          <a
+            class="page page-5"
+            href="topic-5.html"
+            data-lang-key="num-5"
+          ></a>
+
+          <a
+            class="page page-6 active"
+            href="topic-6.html"
+            data-lang-key="num-6"
+          ></a>
         </div>
+
+        <!-- Text Swiper -->
         <div class="swiper text-swiper">
           <div class="swiper-title">
             <img src="./assets/images/6.png" alt="" />
             <span class="num" data-lang-key="num-6"></span>
             <span class="topic-text" data-lang-key="title-6"></span>
           </div>
+
           <div class="swiper-wrapper">
             <div class="swiper-slide">
               <div class="slide-text" data-lang-key="slide-6.1"></div>
             </div>
+
             <div class="swiper-slide">
               <div class="slide-text" data-lang-key="slide-6.2"></div>
             </div>
@@ -119,29 +207,96 @@
         </div>
       </div>
     </main>
+
     <script src="./assets/js/app.js"></script>
-    <!-- Add these script files before closing </body> -->
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
       const prevBtn = document.querySelector(".swiper-ctrl-prev");
       const nextBtn = document.querySelector(".swiper-ctrl-next");
+      const paginationContainer = document.querySelector(".video-pagination");
+      const pranamLink = document.querySelector(".pranam-link");
 
+      // Sound effects
+      const topicAudio = document.getElementById("topicAudio");
+      const swiperAudio = document.getElementById("swiperAudio");
+      const popAudio = document.getElementById("popAudio");
+
+      function playSound(audio) {
+        if (!audio) return;
+
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+
+      // Home button sound
+      const homeBtn = document.querySelector(".home-btn");
+
+      if (homeBtn) {
+        homeBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          playSound(popAudio);
+
+          const href = homeBtn.getAttribute("href");
+
+          setTimeout(() => {
+            window.location.href = href;
+          }, 200);
+        });
+      }
+
+      // Topic page link sound
+      document.querySelectorAll(".pages .page").forEach((pageLink) => {
+        pageLink.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          playSound(topicAudio);
+
+          const href = pageLink.getAttribute("href");
+
+          setTimeout(() => {
+            window.location.href = href;
+          }, 200);
+        });
+      });
+
+      // Pranam link sound
+      if (pranamLink) {
+        pranamLink.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          playSound(topicAudio);
+
+          const href = pranamLink.getAttribute("href");
+
+          setTimeout(() => {
+            window.location.href = href;
+          }, 200);
+        });
+      }
+
+      // Text Swiper
       const textSwiper = new Swiper(".text-swiper", {
         slidesPerView: 1,
         allowTouchMove: false,
         effect: "fade",
+
         fadeEffect: {
           crossFade: true,
         },
+
         speed: 700,
       });
 
+      // Video Swiper
       const videoSwiper = new Swiper(".video-swiper", {
         slidesPerView: 1,
         allowTouchMove: false,
         speed: 700,
         effect: "fade",
+
         fadeEffect: {
           crossFade: true,
         },
@@ -158,60 +313,128 @@
         const activeSlide = document.querySelector(
           ".video-swiper .swiper-slide-active video",
         );
+
         if (activeSlide) {
           activeSlide.play().catch(() => {});
         }
       }
 
-      function updateNav() {
-        const isFirst = videoSwiper.activeIndex === 0;
+      // Show Pranam link only on the final slide
+      function updatePranamLink() {
+        if (!pranamLink) return;
 
-        prevBtn.classList.toggle("hidden", isFirst);
-        nextBtn.classList.remove("hidden");
+        const isLastSlide =
+          videoSwiper.activeIndex === videoSwiper.slides.length - 1;
+
+        pranamLink.classList.toggle("show", isLastSlide);
+      }
+
+      // Prev is dimmed (not hidden) on the first slide.
+      // Next is fully hidden on the last slide — it no longer navigates
+      // to pranam.html; the pranam-link takes over that role instead.
+      function updateNav() {
+        const isFirstSlide = videoSwiper.activeIndex === 0;
+        const isLastSlide =
+          videoSwiper.activeIndex === videoSwiper.slides.length - 1;
+
+        prevBtn.classList.toggle("disabled", isFirstSlide);
+        nextBtn.classList.toggle("disabled", isLastSlide);
+
+        updatePranamLink();
+      }
+
+      function buildPagination() {
+        paginationContainer.innerHTML = "";
+
+        const totalSlides = videoSwiper.slides.length;
+
+        for (let i = 0; i < totalSlides; i++) {
+          const dot = document.createElement("div");
+
+          dot.classList.add("dot");
+
+          if (i === 0) {
+            dot.classList.add("active");
+          }
+
+          dot.addEventListener("click", () => {
+            playSound(swiperAudio);
+            syncSwipers(i);
+          });
+
+          paginationContainer.appendChild(dot);
+        }
+      }
+
+      function updatePagination() {
+        const dots = paginationContainer.querySelectorAll(".dot");
+
+        dots.forEach((dot, index) => {
+          dot.classList.toggle(
+            "active",
+            index === videoSwiper.activeIndex,
+          );
+        });
       }
 
       function syncSwipers(index) {
         videoSwiper.slideTo(index);
         textSwiper.slideTo(index);
+
         pauseAllVideos();
         playActiveVideo();
         updateNav();
+        updatePagination();
       }
 
+      // Next button now only advances the swiper. On the last slide the
+      // button is hidden (see updateNav), so this handler never fires
+      // there and no longer redirects to pranam.html.
       nextBtn.addEventListener("click", () => {
-        const isLast =
+        const isLastSlide =
           videoSwiper.activeIndex === videoSwiper.slides.length - 1;
 
-        if (isLast) {
-          window.location.href = "pranam.html";
-        } else {
-          syncSwipers(videoSwiper.activeIndex + 1);
-        }
+        if (isLastSlide) return;
+
+        playSound(swiperAudio);
+        syncSwipers(videoSwiper.activeIndex + 1);
       });
 
       prevBtn.addEventListener("click", () => {
-        if (videoSwiper.activeIndex > 0) {
+        const canMoveBack =
+          !prevBtn.classList.contains("disabled") &&
+          videoSwiper.activeIndex > 0;
+
+        if (canMoveBack) {
+          playSound(swiperAudio);
           syncSwipers(videoSwiper.activeIndex - 1);
         }
       });
 
-      videoSwiper.on("slideChange", function () {
+      videoSwiper.on("slideChange", () => {
         textSwiper.slideTo(videoSwiper.activeIndex);
+
         pauseAllVideos();
         playActiveVideo();
         updateNav();
+        updatePagination();
       });
 
-      textSwiper.on("slideChange", function () {
+      textSwiper.on("slideChange", () => {
         if (videoSwiper.activeIndex !== textSwiper.activeIndex) {
           videoSwiper.slideTo(textSwiper.activeIndex);
+
           pauseAllVideos();
           playActiveVideo();
           updateNav();
+          updatePagination();
         }
       });
 
+      // Initial page setup
+      buildPagination();
       updateNav();
+      updatePagination();
       playActiveVideo();
     </script>
   </body>
