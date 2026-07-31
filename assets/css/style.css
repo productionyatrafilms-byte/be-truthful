@@ -614,7 +614,7 @@ body[data-lang="gu"] .swiper-title .topic-text{
 .pranam-img span {
   z-index: 15;
   position: absolute;
-  top: 17%;
+  top: 0%;
   left: 50%;
   font-size: 3.4vw;
   transform: translateX(-50%);
