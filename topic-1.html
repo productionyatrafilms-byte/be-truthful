@@ -793,7 +793,6 @@
       let controlsTimer;
       let lastVolume = 1;
       let savedVideoTime = 0;
-      let maxAllowedTime = 0;
       let isProgressDragging = false;
 
       function formatTime(time) {
@@ -820,10 +819,6 @@
       function updateProgress() {
         if (!popupVideo.duration) return;
 
-        if (popupVideo.currentTime > maxAllowedTime) {
-          maxAllowedTime = popupVideo.currentTime;
-        }
-
         savedVideoTime = popupVideo.currentTime;
 
         if (!isProgressDragging) {
@@ -837,6 +832,7 @@
         totalTimeText.textContent = formatTime(popupVideo.duration);
       }
 
+      // Free scrubbing while dragging the slider — just preview the target time
       function handleProgressInput() {
         if (!popupVideo.duration) return;
 
@@ -845,33 +841,18 @@
         const selectedTime =
           (Number(videoProgress.value) / 100) * popupVideo.duration;
 
-        if (selectedTime <= maxAllowedTime) {
-          currentTimeText.textContent = formatTime(selectedTime);
-        } else {
-          const allowedProgress = (maxAllowedTime / popupVideo.duration) * 100;
-
-          videoProgress.value = allowedProgress;
-          currentTimeText.textContent = formatTime(maxAllowedTime);
-        }
+        currentTimeText.textContent = formatTime(selectedTime);
       }
 
+      // Free forward/backward seeking — jump to wherever the user drops the slider
       function handleProgressChange() {
         if (!popupVideo.duration) return;
 
         const selectedTime =
           (Number(videoProgress.value) / 100) * popupVideo.duration;
 
-        if (selectedTime <= maxAllowedTime) {
-          popupVideo.currentTime = selectedTime;
-          savedVideoTime = selectedTime;
-        } else {
-          popupVideo.currentTime = maxAllowedTime;
-
-          const allowedProgress = (maxAllowedTime / popupVideo.duration) * 100;
-
-          videoProgress.value = allowedProgress;
-          savedVideoTime = maxAllowedTime;
-        }
+        popupVideo.currentTime = selectedTime;
+        savedVideoTime = selectedTime;
 
         isProgressDragging = false;
         updateProgress();
@@ -1019,7 +1000,6 @@
 
         popupVideo.addEventListener("ended", function () {
           savedVideoTime = 0;
-          maxAllowedTime = 0;
           videoProgress.value = 0;
           currentTimeText.textContent = "0:00";
           updatePlayIcons();
