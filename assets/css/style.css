@@ -420,9 +420,9 @@ body[data-lang="gu"] .slide-text{
 }
 
 .video-swiper {
-  width: 45vw;
+  width: 47vw;
   height: 32vw;
-  border-radius: 5%;
+  border-radius: 3vw;
   overflow: hidden;
   border: 0.3vw solid white;
   background: rgba(255, 255, 255, 0.08);
@@ -439,7 +439,7 @@ body[data-lang="gu"] .slide-text{
   height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 5%;
+  border-radius: 3vw;
 }
 
 .swiper-title {
