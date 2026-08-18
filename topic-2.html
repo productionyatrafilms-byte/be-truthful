@@ -4,54 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-lang-key="title"></title>
+
     <link rel="stylesheet" href="./assets/css/style.css" />
 
     <!-- Swiper CSS -->
-    <link
-      rel="stylesheet"
-      href="./assets/css/swiper-bundle.min.css"
-    />
+    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css" />
 
     <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="./fontawesome/css/all.min.css"
-    />
+    <link rel="stylesheet" href="./fontawesome/css/all.min.css" />
+
+    <style>
+      body {
+        background-image: url("./assets/images/bg-image.png");
+      }
+
+      /* Needed so .page-title positions against the left column,
+         not the whole page. Remove if style.css already sets it. */
+      .left-container {
+        position: relative;
+      }
+
+      .page-title {
+        margin-left: 5%;
+        position: absolute;
+        width: 25vw;
+        height: 6vw;
+        top: -5%;
+        left: 45%;
+        text-align: center;
+        z-index: 10000;
+        background-color: #ffea71;
+        transition: opacity 3s ease;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 0.3vw solid white;
+        border-radius: 1vw;
+        box-shadow: 0vw 0.4vw 0.2vw rgba(59, 59, 59, 0.421);
+      }
+
+      .page-title span {
+        font-size: 3vw;
+        text-align: center;
+        -webkit-text-stroke: 0.1vw transparent;
+        color: #ff2050;
+        display: block;
+        font-weight: bolder !important;
+      }
+    </style>
   </head>
-  <style>
-    .page-title {
-      margin-left: 5%;
-      position: absolute;
-      width: 25vw;
-      height: 6vw;
-      top: -5%;
-      left: 45%;
-      text-align: center;
-      z-index: 10000;
-      background-color: #ffea71;
-      transition: opacity 3s ease;
-      transform: translate(-50%, -50%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 0.3vw solid white;
-      border-radius: 1vw;
-      box-shadow: 0vw 0.4vw 0.2vw rgba(59, 59, 59, 0.421);
-    }
 
-    .page-title span {
-      font-size: 3vw;
-      text-align: center;
-      -webkit-text-stroke: 0.1vw transparent;
-      color: #ff2050;
-      display: block;
-      font-weight: bolder !important;
-    }
-
-    body {
-      background-image: url("./assets/images/bg-image.png");
-    }
-  </style>
   <body>
     <!-- Sound effects -->
     <audio id="topicAudio" src="./assets/audio/topic.mp3" preload="auto"></audio>
@@ -61,48 +64,56 @@
     <a class="home-btn" href="index.html">
       <img src="./assets/images/home-btn.png" alt="" />
     </a>
-    <!-- nav-container -->
+
+    <!-- Language switcher -->
     <div class="language-container">
       <div class="english active">E</div>
       <div class="hindi">H</div>
       <div class="gujrati">G</div>
     </div>
+
     <main>
       <div class="left-container">
-      
+        <!-- Page title: sits outside the swiper so it stays visible on every slide -->
+        <div class="page-title">
+          <span data-lang-key="title"></span>
+        </div>
 
         <div class="swiper video-swiper">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <div class="page-title">
-          <span data-lang-key="title"> </span>
-        </div>
-              <video muted playsinline preload="metadata">
+              <video muted playsinline preload="metadata" loop>
                 <source src="./assets/videos/2.mp4" type="video/mp4" />
               </video>
             </div>
+
             <div class="swiper-slide">
-              <video muted playsinline preload="metadata">
+              <video muted playsinline preload="metadata" loop>
                 <source src="./assets/videos/3.mp4" type="video/mp4" />
               </video>
             </div>
+
             <div class="swiper-slide">
-              <video muted playsinline preload="metadata">
+              <video muted playsinline preload="metadata" loop>
                 <source src="./assets/videos/4.mp4" type="video/mp4" />
               </video>
             </div>
+
             <div class="swiper-slide">
-              <video muted playsinline preload="metadata">
+              <video muted playsinline preload="metadata" loop>
                 <source src="./assets/videos/5.mp4" type="video/mp4" />
               </video>
             </div>
+
             <div class="swiper-slide">
-              <video muted playsinline preload="metadata">
+              <video muted playsinline preload="metadata" loop>
                 <source src="./assets/videos/6.mp4" type="video/mp4" />
               </video>
             </div>
           </div>
+          <!-- /.swiper-wrapper -->
         </div>
+        <!-- /.video-swiper -->
 
         <div class="custom-nav">
           <button class="swiper-ctrl-prev disabled">
@@ -113,10 +124,13 @@
             <img src="./assets/images/next-btn.png" alt="" />
           </button>
         </div>
+        <!-- /.custom-nav -->
 
         <!-- Dot pagination for the video/text swipers -->
         <div class="video-pagination"></div>
       </div>
+      <!-- /.left-container -->
+
       <div class="right-container">
         <div class="pages">
           <a class="page page-1" href="topic-1.html" data-lang-key="num-1"></a>
@@ -126,36 +140,48 @@
           <a class="page page-5" href="topic-5.html" data-lang-key="num-5"></a>
           <a class="page page-6" href="topic-6.html" data-lang-key="num-6"></a>
         </div>
+        <!-- /.pages -->
+
         <div class="swiper text-swiper">
           <div class="swiper-title">
             <img src="./assets/images/2.png" alt="" />
             <span class="num" data-lang-key="num-2"></span>
             <span class="topic-text" data-lang-key="title-2"></span>
           </div>
+          <!-- /.swiper-title -->
+
           <div class="swiper-wrapper">
             <div class="swiper-slide">
               <div class="slide-text" data-lang-key="slide-2.1"></div>
             </div>
+
             <div class="swiper-slide">
               <div class="slide-text" data-lang-key="slide-2.2"></div>
             </div>
+
             <div class="swiper-slide">
               <div class="slide-text" data-lang-key="slide-2.3"></div>
             </div>
+
             <div class="swiper-slide">
               <div class="slide-text" data-lang-key="slide-2.4"></div>
             </div>
+
             <div class="swiper-slide">
               <div class="slide-text" data-lang-key="slide-2.5"></div>
             </div>
           </div>
+          <!-- /.swiper-wrapper -->
         </div>
+        <!-- /.text-swiper -->
       </div>
+      <!-- /.right-container -->
     </main>
+
     <script src="./assets/js/app.js"></script>
-    <!-- Add these script files before closing </body> -->
-        <script src="./assets/js/swiper-bundle.min.js"></script>
- <script src="./assets/js/djp.js"></script>
+    <script src="./assets/js/swiper-bundle.min.js"></script>
+    <script src="./assets/js/djp.js"></script>
+
     <script>
       const prevBtn = document.querySelector(".swiper-ctrl-prev");
       const nextBtn = document.querySelector(".swiper-ctrl-next");
@@ -180,7 +206,7 @@
         nextBtn.addEventListener("click", () => playSound(swiperAudio));
       }
 
-      // Play pop.mp3 when the home button is clicked (small delay so the sound can start before navigating away)
+      // Play pop.mp3 when the home button is clicked
       const homeBtn = document.querySelector(".home-btn");
       if (homeBtn) {
         homeBtn.addEventListener("click", (e) => {
@@ -193,7 +219,7 @@
         });
       }
 
-      // Play topic.mp3 when a topic page link is clicked (small delay so the sound can start before navigating away)
+      // Play topic.mp3 when a topic page link is clicked
       document.querySelectorAll(".pages .page").forEach((pageLink) => {
         pageLink.addEventListener("click", (e) => {
           e.preventDefault();
