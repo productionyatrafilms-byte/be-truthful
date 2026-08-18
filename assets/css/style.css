@@ -326,9 +326,12 @@ main .right-container {
   justify-content: space-between;
   align-items: center;
   font-family: "BalooRegular";
+  overflow: visible;
 }
 
+
 .pages .page {
+   position: relative;
   color: white;
   width: 3vw;
   height: 3vw;
@@ -348,14 +351,93 @@ main .right-container {
 }
 
 .pages .page:hover {
-  text-shadow: 0 0 0.4vw rgba(50, 50, 50, 0.9);
-  box-shadow: 0 0 0.8vw rgba(65, 65, 65, 0.7);
+  text-shadow: 0 0 0.15vw rgba(50, 50, 50, 0.9);
+  box-shadow: 0 0 0.15vw rgba(65, 65, 65, 0.7);
    background-color: #0FB0FB;
 }
 
 .pages .page.active {
   opacity: 1;
   background-color:#0FB0FB;
+}
+
+.pages .page .page-hover-title {
+  position: absolute;
+
+  /* show above circle */
+  bottom: calc(100% + 0.8vw);
+  left: 50%;
+
+  transform: translateX(-50%) translateY(0.4vw);
+
+  width: auto;
+
+  padding: 0.35vw 0.8vw;
+
+  background-color: #ffffff;
+  color: #6168ea;
+
+  border-radius: 0.6vw;
+
+  font-family: "BalooThambi";
+  font-size: 1.2vw;
+  line-height: 1.1;
+  text-align: center;
+
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  z-index: 9999;
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease,
+    transform 0.25s ease;
+
+  box-shadow: 0 0.1vw 0.1vw rgba(0, 0, 0, 0.2);
+}
+
+/* Small arrow below title */
+.pages .page .page-hover-title::after {
+  content: "";
+
+  position: absolute;
+  top: 100%;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border-left: 0.4vw solid transparent;
+  border-right: 0.4vw solid transparent;
+  border-top: 0.4vw solid #ffffff;
+}
+
+/* Show title when page is hovered */
+.pages .page:hover .page-hover-title {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/* Hindi */
+body[data-lang="hi"] .pages .page .page-hover-title {
+  font-family: "ITFDevanagari";
+  font-size: 1.1vw;
+  line-height: 1.4;
+}
+
+
+/* Gujarati */
+body[data-lang="gu"] .pages .page .page-hover-title {
+  font-family: "NotoSansGujaratiRegular";
+  font-size: 1.1vw;
+  line-height: 1.4;
 }
 
 .swiper {
